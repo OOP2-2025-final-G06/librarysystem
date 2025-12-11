@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from models import Order, User, Product
 from datetime import datetime
 
-# Blueprintの作成
 order_bp = Blueprint('order', __name__, url_prefix='/orders')
 
 
@@ -15,10 +14,17 @@ def list():
 @order_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        user_id = request.form['user_id']
-        product_id = request.form['product_id']
-        order_date = datetime.now()
-        Order.create(user=user_id, product=product_id, order_date=order_date)
+        user_id = request.form.get('user_id')
+        product_id = request.form.get('product_id')
+        if not user_id or not product_id:
+            return redirect(url_for('order.add'))
+
+        user = User.get_or_none(User.id == int(user_id))
+        product = Product.get_or_none(Product.id == int(product_id))
+        if not user or not product:
+            return redirect(url_for('order.add'))
+
+        Order.create(user=user, product=product, order_date=datetime.now())
         return redirect(url_for('order.list'))
     
     users = User.select()
@@ -33,8 +39,19 @@ def edit(order_id):
         return redirect(url_for('order.list'))
 
     if request.method == 'POST':
-        order.user = request.form['user_id']
-        order.product = request.form['product_id']
+        user_id = request.form.get('user_id')
+        product_id = request.form.get('product_id')
+
+        if user_id:
+            user = User.get_or_none(User.id == int(user_id))
+            if user:
+                order.user = user
+
+        if product_id:
+            product = Product.get_or_none(Product.id == int(product_id))
+            if product:
+                order.product = product
+
         order.save()
         return redirect(url_for('order.list'))
 
