@@ -2,15 +2,15 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>図書貸出システム</title>
+    <title>図書貸出管理システム</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 </head>
 <body>
     <h1>図書貸出システム</h1>
     <ul>
-      <li><a href="{{ url_for('user.list') }}">ユーザー</a></li>
-      <li><a href="{{ url_for('product.list') }}">本</a></li>
-      <li><a href="{{ url_for('order.list') }}">貸出状況</a></li>
+      <li><a href="{{ url_for('user.list') }}">ユーザーリスト</a></li>
+      <li><a href="{{ url_for('product.list') }}">ブックリスト</a></li>
+      <li><a href="{{ url_for('order.list') }}">貸出システム</a></li>
     </ul>
 </body>
 </html>
