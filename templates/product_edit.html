@@ -2,20 +2,22 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>製品編集</title>
+    <title>本編集</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 </head>
 <body>
-    <h1>製品を編集</h1>
+    <h1>本を編集</h1>
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
-        <li><a href="{{ url_for('product.list') }}">製品一覧</a></li>
-        <li>製品編集</li>
+        <li><a href="{{ url_for('product.list') }}">本一覧</a></li>
+        <li>本編集</li>
     </ul>
 
     <form action="{{ url_for('product.edit', product_id=product.id) }}" method="post">
-        <label>製品名: <input type="text" name="name" value="{{ product.name }}" required></label><br>
-        <label>価格: <input type="number" step="1" name="price" value="{{ product.price }}" required></label><br>
+        <label>タイトル: <input type="text" name="title" value="{{ product.title }}" required></label><br>
+        <label>分類: <input type="text" name="genre" value="{{ product.genre }}" required></label><br>
+        <label>最大冊数: <input type="number" step="1" name="maxNumber" value="{{ product.maxNumber }}" required></label><br>
+        <label>現在の在庫: <input type="number" step="1" name="currentNumber" value="{{ product.currentNumber }}" required></label><br>
         <button type="submit">保存</button>
     </form>
 </body>
