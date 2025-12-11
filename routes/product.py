@@ -8,7 +8,7 @@ product_bp = Blueprint('product', __name__, url_prefix='/products')
 @product_bp.route('/')
 def list():
     products = Product.select()
-    return render_template('product_list.html', title='製品一覧', items=products)
+    return render_template('product_list.html', title='本データ一覧', items=products)
 
 
 @product_bp.route('/add', methods=['GET', 'POST'])
@@ -16,9 +16,17 @@ def add():
     
     # POSTで送られてきたデータは登録
     if request.method == 'POST':
-        name = request.form['name']
-        price = request.form['price']
-        Product.create(name=name, price=price)
+        title = request.form['title']
+        genre = request.form['genre']
+        maxNumber = request.form['maxNumber']
+        currentNumber = request.form['currentNumber']
+
+        Product.create(
+            title = title,
+            genre = genre,
+            maxNumber = maxNumber,
+            currentNumber = currentNumber
+        )
         return redirect(url_for('product.list'))
     
     return render_template('product_add.html')
@@ -31,8 +39,10 @@ def edit(product_id):
         return redirect(url_for('product.list'))
 
     if request.method == 'POST':
-        product.name = request.form['name']
-        product.price = request.form['price']
+        product.title = request.form['title']
+        product.genre = request.form['genre']
+        product.maxNumber = request.form['maxNumber']
+        product.currentNumber = request.form['currentNumber']
         product.save()
         return redirect(url_for('product.list'))
 
