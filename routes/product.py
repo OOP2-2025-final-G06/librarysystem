@@ -18,8 +18,8 @@ def add():
     if request.method == 'POST':
         title = request.form['title']
         genre = request.form['genre']
-        maxNumber = request.form['maxNumber']
-        currentNumber = request.form['currentNumber']
+        maxNumber = int(request.form['maxNumber'])
+        currentNumber = int(request.form['currentNumber'])
 
         Product.create(
             title = title,
@@ -41,8 +41,8 @@ def edit(product_id):
     if request.method == 'POST':
         product.title = request.form['title']
         product.genre = request.form['genre']
-        product.maxNumber = request.form['maxNumber']
-        product.currentNumber = request.form['currentNumber']
+        product.maxNumber = int(request.form['maxNumber'])
+        product.currentNumber = int(request.form['currentNumber'])
         product.save()
         return redirect(url_for('product.list'))
 
