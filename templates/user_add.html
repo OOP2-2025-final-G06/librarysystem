@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>ユーザー追加</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='user-style.css') }}">
 </head>
 <body>
-    <h1>新しいユーザーを追加</h1>
+    <div class="titleSetting">
+        <h1>新しいユーザーを追加</h1>
+    </div>
     <ul class="breadcrumb">
         <li><a href="{{ url_for('index') }}">HOME</a></li>
         <li><a href="{{ url_for('user.list') }}">ユーザー一覧</a></li>

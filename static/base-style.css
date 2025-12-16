@@ -2,9 +2,20 @@
   font-size: 14pt;
 }
 
+.librarySection {
+    font-size: 16pt;
+    margin: 2rem;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 2rem;
+}
+
+h1 {
+    text-align: center;
+    color: darkred;
+    margin-bottom: 2rem;
 }
 
 table {
