@@ -20,6 +20,7 @@
                 <th>ユーザー</th>
                 <th>本</th>
                 <th>貸出日</th>
+                <th>返却期限</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +29,9 @@
                 <td><a href="{{ url_for('order.edit', order_id=order.id) }}">編集</a></td>
                 <td>{{ order.user.name }}</td>
                 <td>{{ order.product.title }}</td>
-                <td>{{ order.order_date }}</td>
+                <td>{{ order.order_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                
+                <td>{{ (order.order_date + timedelta(days=7)).strftime('%Y-%m-%d %H:%M') }}</td>
             </tr>
             {% endfor %}
         </tbody>

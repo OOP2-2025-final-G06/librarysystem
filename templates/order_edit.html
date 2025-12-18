@@ -15,14 +15,14 @@
 
     <form action="{{ url_for('order.edit', order_id=order.id) }}" method="post">
         <label>ユーザー: 
-            <select name="name" required>
+            <select name="user_id" required>
                 {% for user in users %}
                     <option value="{{ user.id }}" {% if order.user.id == user.id %}selected{% endif %}>{{ user.name }}</option>
                 {% endfor %}
             </select>
         </label><br>
         <label>本: 
-            <select name="title" required>
+            <select name="product_id" required>
                 {% for product in products %}
                     <option value="{{ product.id }}" {% if order.product.id == product.id %}selected{% endif %}>{{ product.title }}</option>
                 {% endfor %}
