@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>貸出状況</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='order-style.css') }}">
 </head>
 <body>
     <h1>貸出状況</h1>
@@ -28,7 +28,12 @@
                 <td><a href="{{ url_for('order.edit', order_id=order.id) }}">編集</a></td>
                 <td>{{ order.user.name }}</td>
                 <td>{{ order.product.title }}</td>
-                <td>{{ order.order_date }}</td>
+                <td>
+                    {% if order.order_date %}
+                      {{ order.order_date.strftime('%Y/%m/%d %H:%M') }}
+                    {% endif %}
+                  </td>
+                  
             </tr>
             {% endfor %}
         </tbody>

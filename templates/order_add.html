@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>貸出</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='order-style.css') }}">
 </head>
 <body>
     <h1>新規貸出</h1>
@@ -22,13 +22,16 @@
             </select>
         </label><br>
         <label>本: 
-            <select name="product_id" required>
+            <select name="product_id">
                 {% for product in products %}
-                    <option value="{{ product.id }}">{{ product.title }}</option>
+                    <option value="{{ product.id }}"
+                        {% if product.currentNumber == 0 %}disabled{% endif %}>
+                        {{ product.title }} (在庫: {{ product.currentNumber }})
+                    </option>
                 {% endfor %}
             </select>
         </label><br>
-        <button type="submit">追加</button>
     </form>
+        <button type="submit">追加</button>
 </body>
 </html>

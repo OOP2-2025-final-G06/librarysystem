@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ブックリスト</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product-style.css') }}">
 </head>
 <body>
     <h1>ブックリスト</h1>
@@ -12,7 +12,7 @@
         <li><a href="{{ url_for('product.list') }}">本データ一覧</a></li>
 
     </ul>
-    <a href="{{ url_for('product.add') }}">新しい本追加</a>
+    <a href="{{ url_for('product.add') }}">新しい本の登録</a>
     <table>
         <thead>
             <tr>
