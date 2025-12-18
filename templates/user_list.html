@@ -14,7 +14,7 @@
         <li>>ユーザー一覧</a></li>
     </ul>
 
-    <button type="button"><a href="{{ url_for('user.add') }}">新規ユーザー追加</a></button>
+    <a href="{{ url_for('user.add') }}">新規ユーザー登録</a>
     <table>
         <thead>
             <tr>
@@ -26,7 +26,7 @@
         <tbody>
             {% for user in items %}
             <tr>
-                <td><a href="{{ url_for('user.edit', user_id=user.id) }}">編集</a></td>
+                <td><a href="{{ url_for('user.edit', user_id=user.id) }}">ユーザー編集</a></td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.age }}</td>
             </tr>

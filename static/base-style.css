@@ -141,6 +141,11 @@ h1 {
     content: "";
 }
 
+li {
+    margin-bottom: 2rem;
+    font-weight: bold;
+    font-size: 20pt;
+}
 table {
   width: 100%;
   border-collapse: collapse;

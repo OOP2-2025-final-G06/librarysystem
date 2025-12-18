@@ -1,4 +1,4 @@
-/* ユーザーリスト用のCSS */
+/* 貸出用のCSS */
 :root {
   font-size: 14pt;
 }
@@ -11,15 +11,19 @@ body {
     background: linear-gradient(to bottom, green, lightgreen);
 }
 
-.titleSetting {
+h1 {
     text-align: center;
     color: darkred;
     margin-bottom: 2rem;
 }
 
+form {
+    text-align: center;
+}
+
 label{
     font-weight: bold;
-    text-align: center;
+    
 }
 
 table {
@@ -58,7 +62,7 @@ label {
     margin-top: 1rem;
 }
 
-input {
+select {
     font-size: large;
     margin-top: 0.5rem;
     padding: 0.5rem;
