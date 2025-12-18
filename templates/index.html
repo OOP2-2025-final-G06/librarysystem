@@ -6,11 +6,58 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
 </head>
 <body>
-    <h1>図書貸出システム</h1>
-    <ul class="librarySection">
+
+<div class="librarysystem">
+  <nav class="sidebar"></nav>
+    <h1>管理メニュー</h1>
+    <ul>
       <li><a href="{{ url_for('user.list') }}">ユーザーリスト</a></li>
+      <li><a href="{{ url_for('user.add') }}">新規ユーザー登録</a></li>
       <li><a href="{{ url_for('product.list') }}">ブックリスト</a></li>
-      <li><a href="{{ url_for('order.list') }}">貸出システム</a></li>
+      <li><a href="{{ url_for('product.add') }}">新規ブック登録</a></li>
+      <li><a href="{{ url_for('order.list') }}">貸出状況</a></li>
+      <li><a href="{{ url_for('order.add') }}">新規貸出</a></li>
     </ul>
+  </nav>
+
+  <main class="librarysystem-content">
+    <h1>ダッシュボード</h1>
+
+    <div class="statistics">
+      <h2>統計情報</h2>
+      <ul>
+        <li>総ユーザー数: {{ total_users }}</li>
+        <li>総ブック数: {{ total_products }}</li>
+        <li>現在貸出中のブック数: {{ total_borrowed }}</li>
+      </ul>
+    </div>
+
+    <div class="genrerankings">
+      <h2>ジャンル別貸出ランキング</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ジャンル</th>
+            <th>貸出数</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for genre, count in genre_rankings %}
+          <tr>
+            <td>{{ genre }}</td>
+            <td>{{ count }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="monthlyrentaltrends">
+      <h2>月別貸出傾向</h2>
+      <div class="chart">
+        <!-- ここにグラフを表示するためのコードを追加 -->
+    </div>
+
+  </main>
 </body>
 </html>

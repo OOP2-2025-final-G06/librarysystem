@@ -15,7 +15,13 @@
 
     <form action="{{ url_for('product.edit', product_id=product.id) }}" method="post">
         <label>タイトル: <input type="text" name="title" value="{{ product.title }}" required></label><br>
-        <label>分類: <input type="text" name="genre" value="{{ product.genre }}" required></label><br>
+        <label>分類: 
+            <select name = "genre" required>
+                {% for g in genres %}
+                    <option value="{{ g }}">{{ g }}</option>
+                {% endfor %}
+            </select>
+        </label><br>
         <label>最大冊数: <input type="number" step="1" name="maxNumber" value="{{ product.maxNumber }}" required></label><br>
         <label>現在の在庫: <input type="number" step="1" name="currentNumber" value="{{ product.currentNumber }}" required></label><br>
     </form>
