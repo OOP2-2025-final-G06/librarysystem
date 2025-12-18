@@ -7,13 +7,12 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 2rem;
     height: 100vh;
-    background: green;
-    background: linear-gradient(to bottom, green, lightgreen);
+    background-color: #f4f4f9;
 }
 
 h1 {
     text-align: center;
-    color: darkred;
+    color: #2c3e50;
     margin-bottom: 2rem;
 }
 
