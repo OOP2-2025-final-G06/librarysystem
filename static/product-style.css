@@ -1,4 +1,4 @@
-/* ユーザーリスト用のCSS */
+/* 本ページ用のCSS */
 :root {
   font-size: 14pt;
 }
@@ -11,15 +11,19 @@ body {
     background: linear-gradient(to bottom, green, lightgreen);
 }
 
-.titleSetting {
+h1 {
     text-align: center;
     color: darkred;
     margin-bottom: 2rem;
 }
 
+form {
+    text-align: center;
+}
+
 label{
     font-weight: bold;
-    text-align: center;
+    
 }
 
 table {

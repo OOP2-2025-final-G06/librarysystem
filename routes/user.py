@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from models import User
 
 # Blueprintの作成
@@ -21,7 +21,12 @@ def add():
     
     if request.method == 'POST':
         name = request.form['name']
-        age = request.form['age']
+        age = int(request.form['age'])
+        # 年齢チェック
+        if age <= 0:
+            flash('年齢は1以上の数値を入力してください', 'error')
+            return render_template('user_add.html', name=name, age=age)
+
         User.create(
             name=name, 
             age=age
@@ -40,7 +45,12 @@ def edit(user_id):
 
     if request.method == 'POST':
         user.name = request.form['name']
-        user.age = request.form['age']
+        user.age = int(request.form['age'])
+        # 年齢チェック
+        if user.age <= 0:
+            flash('年齢は1以上の数値を入力してください', 'error')
+            return render_template('user_edit.html', user=user)
+
         user.save()
         return redirect(url_for('user.list'))
 

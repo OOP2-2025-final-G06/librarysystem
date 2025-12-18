@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>本編集</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product-style.css') }}">
 </head>
 <body>
     <h1>本を編集</h1>
@@ -18,7 +18,7 @@
         <label>分類: <input type="text" name="genre" value="{{ product.genre }}" required></label><br>
         <label>最大冊数: <input type="number" step="1" name="maxNumber" value="{{ product.maxNumber }}" required></label><br>
         <label>現在の在庫: <input type="number" step="1" name="currentNumber" value="{{ product.currentNumber }}" required></label><br>
-        <button type="submit">保存</button>
     </form>
+        <button type="submit">更新</button>
 </body>
 </html>
