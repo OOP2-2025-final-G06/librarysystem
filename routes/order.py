@@ -14,15 +14,16 @@ def list():
 @order_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        # 1. 安全に入力値を取得 (main側の記述を採用)
+        # 1. フォームから入力値を取得
         user_id = request.form.get('user_id')
         product_id = request.form.get('product_id')
+        order_date = request.form.get('order_date') # カレンダーから日付を取得
         
-        # IDが空でないかチェック
-        if not user_id or not product_id:
+        # 2. 必須項目が空でないかチェック
+        if not user_id or not product_id or not order_date:
             return redirect(url_for('order.add'))
 
-        # 2. データベースからモデルを取得 (main側の記述を採用)
+        # 3. データベースからモデルを取得
         user = User.get_or_none(User.id == int(user_id))
         product = Product.get_or_none(Product.id == int(product_id))
         
@@ -30,19 +31,19 @@ def add():
         if not user or not product:
             return redirect(url_for('order.add'))
 
-        # 3. 在庫チェック (product側の記述を採用)
+        # 4. 在庫チェック
         if product.currentNumber <= 0:
-            # エラー処理（本来は画面にメッセージを出すべきですが、今はリダイレクト）
+            # 在庫がない場合はリストに戻る（エラーメッセージ等を表示しても良い）
             return redirect(url_for('order.list'))
 
-        # 4. 貸出処理 (両方の記述を統合)
+        # 5. 貸出処理（取得した日付を使用）
         Order.create(
             user=user, 
             product=product, 
-            order_date=datetime.now()
+            order_date=order_date 
         )
 
-        # 5. 在庫を減らす (product側の記述を採用)
+        # 6. 在庫を減らす
         product.currentNumber -= 1
         product.save()
 
