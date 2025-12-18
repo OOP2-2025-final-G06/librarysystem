@@ -2,15 +2,171 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>図書貸出管理システム</title>
+    <title>図書貸出管理ダッシュボード</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* ダッシュボード専用の簡易スタイル */
+        .dashboard-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+        }
+        
+        /* 左側：メインエリア（データ・グラフ） */
+        .main-area {
+            flex: 3; /* 画面の75%くらい */
+        }
+        
+        /* 右側：サイドバー（ボタン） */
+        .sidebar {
+            flex: 1; /* 画面の25%くらい */
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* データカードのスタイル */
+        .stats-cards {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            flex: 1;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .card h3 { margin: 0 0 10px 0; font-size: 1.2rem; color: #555; }
+        .card .number { font-size: 2.5rem; font-weight: bold; color: #2c3e50; }
+
+        /* グラフエリア */
+        .charts-wrapper {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .chart-box {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .chart-pie { flex: 1; min-width: 300px; }
+        .chart-bar { flex: 2; min-width: 400px; }
+
+        /* 右側の大きなボタン */
+        .nav-btn {
+            display: block;
+            padding: 20px;
+            text-align: center;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .nav-btn:hover { background-color: #2980b9; }
+        .nav-btn.users { background-color: #e67e22; }
+        .nav-btn.books { background-color: #27ae60; }
+        .nav-btn.loans { background-color: #8e44ad; }
+    </style>
 </head>
 <body>
-    <h1>図書貸出システム</h1>
-    <ul>
-      <li><a href="{{ url_for('user.list') }}">ユーザーリスト</a></li>
-      <li><a href="{{ url_for('product.list') }}">ブックリスト</a></li>
-      <li><a href="{{ url_for('order.list') }}">貸出システム</a></li>
-    </ul>
+    <h1>図書貸出システム ダッシュボード</h1>
+    
+    <div class="dashboard-container">
+        
+        <div class="main-area">
+            
+            <div class="stats-cards">
+                <div class="card">
+                    <h3>登録ユーザー数</h3>
+                    <div class="number">{{ user_count }}人</div>
+                </div>
+                <div class="card">
+                    <h3>総在庫冊数</h3>
+                    <div class="number">{{ total_stock }}冊</div>
+                </div>
+            </div>
+
+            <div class="charts-wrapper">
+                <div class="chart-box chart-pie">
+                    <h3>ジャンル別貸出割合</h3>
+                    <canvas id="genreChart"></canvas>
+                </div>
+                <div class="chart-box chart-bar">
+                    <h3>月別総貸出数</h3>
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <a href="{{ url_for('user.list') }}" class="nav-btn users">
+                ユーザー管理<br>
+                <span style="font-size:0.8rem">登録・編集</span>
+            </a>
+            <a href="{{ url_for('product.list') }}" class="nav-btn books">
+                ブックリスト<br>
+                <span style="font-size:0.8rem">在庫管理</span>
+            </a>
+            <a href="{{ url_for('order.list') }}" class="nav-btn loans">
+                貸出システム<br>
+                <span style="font-size:0.8rem">貸出・返却</span>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        // Pythonから渡されたデータを受け取る
+        const genreLabels = {{ genre_labels | tojson }};
+        const genreData = {{ genre_data | tojson }};
+        const monthLabels = {{ month_labels | tojson }};
+        const monthData = {{ month_data | tojson }};
+
+        // 1. 円グラフ（ジャンル別）
+        const ctxPie = document.getElementById('genreChart').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: genreLabels,
+                datasets: [{
+                    data: genreData,
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                    ]
+                }]
+            }
+        });
+
+        // 2. 棒グラフ（月別）
+        const ctxBar = document.getElementById('monthlyChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: '貸出数',
+                    data: monthData,
+                    backgroundColor: '#36A2EB'
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 } // 整数で表示
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
