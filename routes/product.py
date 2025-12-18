@@ -21,13 +21,12 @@ def add():
         title = request.form['title']
         genre = request.form['genre']
         maxNumber = int(request.form['maxNumber'])
-        currentNumber = int(request.form['currentNumber'])
 
         Product.create(
             title = title,
             genre = genre,
             maxNumber = maxNumber,
-            currentNumber = currentNumber
+            currentNumber = maxNumber # 追加するときは満冊
         )
         return redirect(url_for('product.list'))
     

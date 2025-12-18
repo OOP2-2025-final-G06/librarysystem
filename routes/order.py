@@ -16,9 +16,30 @@ def list():
 def add():
     if request.method == 'POST':
         user_id = request.form['user_id']
-        product_id = request.form['product_id']
+        product_id = int(request.form['product_id'])
         order_date = datetime.now()
-        Order.create(user=user_id, product=product_id, order_date=order_date)
+
+        product = Product.get_or_none(Product.id == product_id)
+
+        if not product_id:
+            return redirect(url_for('order.list'))
+        
+        # 在庫チェック
+        if product.currentNumber <= 0:
+            #エラーメッセージ実装するよてい
+            return redirect(url_for('order.list'))
+        
+        # 貸出処理
+        Order.create(
+            user = user_id,
+            product = product_id,
+            order_date = order_date
+        )
+
+        # 在庫を減らす
+        product.currentNumber -= 1
+        product.save()
+
         return redirect(url_for('order.list'))
     
     users = User.select()
