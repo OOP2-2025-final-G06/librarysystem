@@ -4,16 +4,89 @@
     <meta charset="UTF-8">
     <title>図書貸出管理システム</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>図書貸出システム</h1>
-    <ul class="librarySection">
-      <li><a href="{{ url_for('user.list') }}">ユーザーリスト</a></li>
-      <li><a href="{{ url_for('user.add') }}">新規ユーザー登録</a></li>
-      <li><a href="{{ url_for('product.list') }}">ブックリスト</a></li>
-      <li><a href="{{ url_for('product.add') }}">新規ブック登録</a></li>
-      <li><a href="{{ url_for('order.list') }}">貸出状況</a></li>
-      <li><a href="{{ url_for('order.add') }}">新規貸出</a></li>
+
+<div class="librarysystem">
+  <nav class="sidebar">
+    <h1>管理メニュー</h1>
+    <ul>
+      <li><a href="{{ url_for('user.list') }}" class="btn-side">ユーザーリスト</a></li>
+      <li><a href="{{ url_for('user.add') }}" class="btn-side">新規ユーザー登録</a></li>
+      <li><a href="{{ url_for('product.list') }}" class="btn-side">ブックリスト</a></li>
+      <li><a href="{{ url_for('product.add') }}" class="btn-side">新規ブック登録</a></li>
+      <li><a href="{{ url_for('order.list') }}" class="btn-side">貸出状況</a></li>
+      <li><a href="{{ url_for('order.add') }}" class="btn-side">新規貸出</a></li>
     </ul>
+  </nav>
+
+  <main class="librarysystem-content">
+    <h1>ダッシュボード</h1>
+
+    <div class="kpi-container">
+      <div class="kpi-card">
+        <h3>総ユーザー数</h3>
+        <p class="kpi-value">{{ user_count }} <span class="unit">人</span></p>
+      </div>
+      <div class="kpi-card">
+        <h3>総蔵書数</h3>
+        <p class="kpi-value">{{ product_count }} <span class="unit">冊</span></p>
+      </div>
+      <div class="kpi-card">
+        <h3>累計貸出数</h3>
+        <p class="kpi-value">{{ order_count }} <span class="unit">回</span></p>
+      </div>
+    </div>
+
+    <div class="charts-container">
+      <div class="chart-box">
+        <h3>ジャンル分布</h3>
+        <canvas id="genreChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>月別貸出推移</h3>
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // ジャンル分布 (円グラフ)
+  const ctxGenre = document.getElementById('genreChart').getContext('2d');
+  new Chart(ctxGenre, {
+      type: 'pie',
+      data: {
+          labels: {{ genre_labels | tojson }},
+          datasets: [{
+              data: {{ genre_data | tojson }},
+              backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+          }]
+        }
+    });
+
+  // 月別貸出数 (折れ線グラフ)
+  const ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+  new Chart(ctxMonthly, {
+      type: 'line',
+      data: {
+          labels: {{ month_labels | tojson }},
+          datasets: [{
+              label: '貸出数',
+              data: {{ month_data | tojson }},
+              borderColor: '#36A2EB',
+              fill: false,
+              tension: 0.1
+          }]
+      },
+      options: {
+          scales: {
+              y: { beginAtZero: true, ticks: { stepSize: 1 } }
+          }
+      }
+  });
+</script>
+
 </body>
 </html>
