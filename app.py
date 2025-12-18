@@ -1,6 +1,7 @@
 from flask import Flask, render_template
-from models import initialize_database
+from models import initialize_database, User, Product, Order
 from routes import blueprints
+from peewee import fn
 
 app = Flask(__name__)
 app.secret_key = 'secret_key'
