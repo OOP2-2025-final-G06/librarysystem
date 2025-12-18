@@ -1,0 +1,76 @@
+/* ユーザーリスト用のCSS */
+:root {
+  font-size: 14pt;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 2rem;
+    height: 100vh;
+    background: green;
+    background: linear-gradient(to bottom, green, lightgreen);
+}
+
+.titleSetting {
+    text-align: center;
+    color: darkred;
+    margin-bottom: 2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+button {
+    font-weight: bold;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border: 3px, solid, black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+li {
+    font-weight: bold;
+    font-size: 16pt;
+}
+th, td {
+    border: 3px solid black;
+    padding: 10px;
+    text-align: left;
+    background-color: white;
+}
+
+th {
+  background-color: gray;
+}
+
+label {
+    font-size: large;
+    display: block;
+    margin-top: 1rem;
+}
+
+input {
+    font-size: large;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+
+.breadcrumb {
+  padding: 0;
+  margin-bottom: 2rem;
+  list-style: none;
+}
+.breadcrumb li {
+  display: inline;
+}
+.breadcrumb li::after {
+  content: " > ";
+}
+.breadcrumb li:nth-last-child()::after {
+  content: "";
+}
