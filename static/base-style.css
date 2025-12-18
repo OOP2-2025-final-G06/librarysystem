@@ -12,11 +12,6 @@ body {
   flex-direction: column;
 }
 
-<<<<<<< Updated upstream
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 2rem;
-=======
 .librarysystem {
     display: flex;
     flex: 1;
@@ -70,7 +65,6 @@ body {
 
 .sidebar a:hover {
     background-color: #1abc9c;
->>>>>>> Stashed changes
 }
 
 h1 {
@@ -78,8 +72,6 @@ h1 {
     margin-bottom: 30px;
 }
 
-<<<<<<< Updated upstream
-=======
 .kpi-container {
     display: flex;
     gap: 20px;
@@ -149,7 +141,6 @@ h1 {
     content: "";
 }
 
->>>>>>> Stashed changes
 table {
   width: 100%;
   border-collapse: collapse;
