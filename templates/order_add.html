@@ -22,9 +22,12 @@
             </select>
         </label><br>
         <label>本: 
-            <select name="product_id" required>
+            <select name="product_id">
                 {% for product in products %}
-                    <option value="{{ product.id }}">{{ product.title }}</option>
+                    <option value="{{ product.id }}"
+                        {% if product.currentNumber == 0 %}disabled{% endif %}>
+                        {{ product.title }} (在庫: {{ product.currentNumber }})
+                    </option>
                 {% endfor %}
             </select>
         </label><br>
